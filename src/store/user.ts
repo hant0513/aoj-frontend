@@ -31,6 +31,7 @@ export default {
     loginUser: {
       userName: "未登录",
       //userRole: ACCESS_ENUM.NOT_LOGIN,
+      role: "noLogin",
     },
   }),
   actions: {

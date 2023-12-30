@@ -38,6 +38,7 @@ const store = useStore();
 setTimeout(() => {
   store.dispatch("user/getLoginUser", {
     userName: "hant",
+    role: "admin",
   });
 }, 3000);
 // 获取当前页面的路由对象。
