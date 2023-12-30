@@ -1,6 +1,10 @@
 <template>
   <div id="globalHeader">
-    <a-menu mode="horizontal" :default-selected-keys="['1']">
+    <a-menu
+      mode="horizontal"
+      :selected-keys="selectedKeys"
+      @menu-item-click="doMenuClick"
+    >
       <a-menu-item
         key="0"
         :style="{ padding: 0, marginRight: '38px' }"
@@ -11,15 +15,36 @@
           <div class="logo-name">AOJ</div>
         </div>
       </a-menu-item>
-      <a-menu-item key="1">Home</a-menu-item>
-      <a-menu-item key="2">Solution</a-menu-item>
-      <a-menu-item key="3">Cloud Service</a-menu-item>
-      <a-menu-item key="4">Cooperation</a-menu-item>
+      <a-menu-item v-for="item in routes" :key="item.path">{{
+        item.name
+      }}</a-menu-item>
     </a-menu>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { routes } from "../router/routes";
+import { useRouter } from "vue-router";
+import { ref } from "vue";
+
+// 获取当前页面的路由对象。
+const router = useRouter();
+
+//响应式变量
+const selectedKeys = ref("/"); //默认主页
+
+router.afterEach((to, from, failure) => {
+  selectedKeys.value = [to.path];
+});
+
+//处理菜单点击的函数，接收一个字符串参数 key。
+const doMenuClick = (key: string) => {
+  router.push({
+    //进行路由导航
+    path: key,
+  });
+};
+</script>
 
 <style scoped>
 .title-bar {
