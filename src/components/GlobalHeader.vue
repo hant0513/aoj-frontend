@@ -16,9 +16,9 @@
             <div class="logo-name">AOJ</div>
           </div>
         </a-menu-item>
-        <a-menu-item v-for="item in routes" :key="item.path">{{
-          item.name
-        }}</a-menu-item>
+        <a-menu-item v-for="item in visibleRoutes" :key="item.path">
+          {{ item.name }}
+        </a-menu-item>
       </a-menu>
     </a-col>
     <a-col flex="100px">
@@ -30,15 +30,35 @@
 <script setup lang="ts">
 import { routes } from "../router/routes";
 import { useRouter } from "vue-router";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { useStore } from "vuex";
+import checkAccess from "@/access/checkAccess";
+import ACCESS_ENUM from "../access/accessEnum";
+
+const store = useStore();
+const loginUser = store.state.user.loginUser; //获取当前用户
+
+//展示在菜单上的路由,过滤出需要展示的路由
+const visibleRoutes = computed(() => {
+  return routes.filter((item, index) => {
+    if (item.meta?.hideInMenu) {
+      //判断是否需要展示
+      return false;
+    }
+    //根据权限过滤菜单
+    if (!checkAccess(store.state.user.loginUser, item.meta?.access as string)) {
+      return false;
+    }
+    return true;
+  });
+});
 
 //获取当前存取的全部信息
-const store = useStore();
+
 setTimeout(() => {
   store.dispatch("user/getLoginUser", {
     userName: "hant",
-    role: "admin",
+    userRole: ACCESS_ENUM.ADMIN,
   });
 }, 3000);
 // 获取当前页面的路由对象。
