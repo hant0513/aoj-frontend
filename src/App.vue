@@ -11,7 +11,7 @@
 <script setup lang="ts">
 import BasicLayout from "@/layouts/BasicLayout";
 import { useRouter } from "vue-router";
-import { onMounted } from "@/vue";
+import { onMounted } from "vue";
 import store from "./store";
 
 const router = useRouter();
