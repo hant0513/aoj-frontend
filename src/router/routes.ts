@@ -1,8 +1,8 @@
+import NoAuthView from "@/views/NoAuth.vue";
 import ACCESS_ENUM from "@/access/accessEnum";
 import { RouteRecordRaw } from "vue-router";
 import HomeView from "../views/HomeView.vue";
-import NoAuthView from "../views/NoAuth.vue";
-import AdminView from "../views/AdminView.vue";
+import AdminView from "@/views/AdminView.vue";
 export const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
