@@ -4,6 +4,8 @@
 //   loginUser: { userName: "未登录" },
 // });
 
+import { StoreOptions } from "vuex";
+
 // //便捷获取一些变量的方法
 // const getters = {};
 
@@ -45,4 +47,5 @@ export default {
       state.loginUser = payload;
     },
   },
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 } as StoreOptions<any>;

@@ -1,5 +1,5 @@
 <template>
-  <a-row id="globalHeader" style="margin-bottom: 16px" align="center">
+  <a-row id="globalHeader" align="center" :wrap="false">
     <a-col flex="auto">
       <a-menu
         mode="horizontal"
@@ -29,7 +29,7 @@
 
 <script setup lang="ts">
 import { routes } from "../router/routes";
-import { useRouter, stringifyQuery } from "vue-router";
+import { useRouter } from "vue-router";
 import { ref } from "vue";
 import { useStore } from "vuex";
 

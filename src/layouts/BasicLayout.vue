@@ -1,6 +1,6 @@
 <template>
   <div id="basicLayout">
-    <a-layout style="height: 400px">
+    <a-layout style="min-height: 100vh">
       <a-layout-header class="header"><GlobalHeader /></a-layout-header>
       <a-layout-content class="content"><router-view /></a-layout-content>
       <a-layout-footer class="footer">@By hant</a-layout-footer>
@@ -12,18 +12,18 @@
 #basicLayout {
 }
 #basicLayout .header {
-  margin-bottom: 16px;
   box-shadow: #eee 1px 1px 5px;
 }
 #basicLayout .content {
   background: linear-gradient(to right, #313c4e, #fff);
   margin-bottom: 16px;
+  padding: 20px;
 }
 
 #basicLayout .footer {
   background: #24bb9b;
   padding: 16px;
-  position: absolute; /* 绝对定位：固定至底部 */
+  position: sticky; /* 绝对定位：固定至底部 */
   bottom: 0;
   /* 撑满整个底部区域 */
   left: 0;

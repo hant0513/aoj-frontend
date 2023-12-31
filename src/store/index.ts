@@ -1,5 +1,5 @@
 import { createStore } from "vuex";
-import user from "./user.ts";
+import user from "./user";
 export default createStore({
   state: {},
   getters: {},
