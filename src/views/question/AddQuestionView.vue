@@ -119,6 +119,12 @@ import { reactive } from "vue";
 import MdEditor from "@/components/MdEditor.vue";
 import { QuestionControllerService } from "../../../generated";
 import { Message } from "@arco-design/web-vue";
+import { useRoute } from "vue-router";
+
+const route = useRoute();
+//如果页面地址包含 update 视为更新页面
+const updatePage = route.path.includes("update");
+//根据用户id 获取老的数据
 
 //定义响应式变量  from 表单的数据
 const form = reactive({
