@@ -1,12 +1,17 @@
 <template>
-  <Editor :value="value" :plugins="plugins" @change="handleChange" />
+  <Editor
+    :value="value"
+    :mode="mode"
+    :plugins="plugins"
+    @change="handleChange"
+  />
 </template>
 
 <script lang="ts" setup>
 import heighlight from "@bytemd/plugin-highlight";
 import gfm from "@bytemd/plugin-gfm";
 import { Editor, Viewer } from "@bytemd/vue-next";
-import { ref, defineProps, withDefaults } from "vue";
+import { defineProps, withDefaults } from "vue";
 
 const plugins = [
   gfm(),
@@ -20,11 +25,13 @@ const plugins = [
  */
 interface Props {
   value: string;
+  mode: string;
   handleChange: (v: string) => void;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   value: () => "",
+  mode: () => "split",
   handleChange: (v: string) => {
     console.log(v);
   },

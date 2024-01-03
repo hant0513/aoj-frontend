@@ -35,7 +35,12 @@ export const routes: Array<RouteRecordRaw> = [
     component: ExempleViewVue,
   },
   {
-    path: "/add",
+    path: "/manage/question",
+    name: "管理题目",
+    component: ManageQuestionView,
+  },
+  {
+    path: "/add/question",
     name: "创建题目",
     component: AddQuestionView,
     // meta: {
