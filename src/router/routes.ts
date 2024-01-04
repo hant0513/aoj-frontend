@@ -2,12 +2,12 @@ import NoAuthView from "@/views/NoAuth.vue";
 import ACCESS_ENUM from "@/access/accessEnum";
 import { RouteRecordRaw } from "vue-router";
 import ExempleViewVue from "@/views/ExempleView.vue";
-import AdminView from "@/views/AdminView.vue";
 import UserLayoutVue from "@/layouts/UserLayout.vue";
 import UserLoginView from "@/views/user/UserLoginView.vue";
 import UserRegisterView from "@/views/user/UserRegisterView.vue";
 import AddQuestionView from "@/views/question/AddQuestionView.vue";
 import ManageQuestionView from "@/views/question/ManageQuestionView.vue";
+import QuestionsView from "@/views/question/QuestionsView.vue";
 
 export const routes: Array<RouteRecordRaw> = [
   {
@@ -32,8 +32,13 @@ export const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/",
+    name: "主页",
+    component: QuestionsView,
+  },
+  {
+    path: "/questions",
     name: "浏览题目",
-    component: ExempleViewVue,
+    component: QuestionsView,
   },
   {
     path: "/manage/question",
@@ -51,6 +56,7 @@ export const routes: Array<RouteRecordRaw> = [
       access: ACCESS_ENUM.USER, //仅登录用户
     },
   },
+
   {
     path: "/update/question",
     name: "更新题目",
