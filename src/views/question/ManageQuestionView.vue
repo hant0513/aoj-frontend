@@ -7,10 +7,22 @@
       :pagination="{
         showTotal: true,
         pageSize: searchParams.pageSize,
-        current: searchParams.pageNum,
+        current: searchParams.current,
         total,
       }"
+      @page-change="onPageChange"
     >
+      <template #tags="{ record }">
+        <span wrap>
+          <a-tag
+            v-for="(tag, index) in JSON.parse(record.tags)"
+            :key="index"
+            color="blue"
+            >{{ tag }}</a-tag
+          >
+        </span>
+      </template>
+
       <template #optional="{ record }">
         <a-space>
           <a-button @click="doUpdate(record)" type="primary">修改</a-button>
@@ -24,7 +36,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watchEffect } from "vue";
 import { QuestionControllerService, Question } from "../../../generated";
 import { Message } from "@arco-design/web-vue";
 import { useRouter } from "vue-router";
@@ -35,8 +47,8 @@ const datalist = ref([]);
 const total = ref(0);
 //默认查询条件
 const searchParams = ref({
-  pageNum: 1,
-  pageSize: 10,
+  current: 1,
+  pageSize: 2,
 });
 
 /**
@@ -55,11 +67,60 @@ const loadData = async () => {
 };
 
 /**
+ *
+ * @param page 分页
+ */
+const onPageChange = (page: number) => {
+  searchParams.value = {
+    ...searchParams.value, //获取之前的搜索值
+    current: page, //覆盖 current
+  };
+};
+
+//监听下面的函数，参数发生改变，就会重新执行
+watchEffect(() => {
+  loadData();
+});
+
+/**
  * 页面加载时，请求后端数据
  */
 onMounted(() => {
   loadData();
 });
+
+/**
+ * 删除操作
+ * @param question
+ */
+const doDelete = async (question: Question) => {
+  //调用后端接口
+  const res = await QuestionControllerService.deleteQuestionUsingPost({
+    id: question.id,
+  });
+  if (res.code === 0) {
+    Message.success("删除成功");
+    //删除成功后，更新数据
+    loadData();
+  } else {
+    Message.error("删除失败");
+  }
+};
+
+//更新数据
+//将创建题目页面 复用 为更新题目页面
+//  只需要在原先路由后面带上id，就可以从后端读取数据，再把数据渲染到前端页面
+const router = useRouter();
+
+const doUpdate = (question: Question) => {
+  router.push({
+    path: "/update/question",
+    //用 query  ---URL后面的参数 ,不是params --动态路由的参数
+    query: {
+      id: question.id,
+    },
+  });
+};
 
 /**
  * 行：从后端数据获取（dataList）
@@ -82,7 +143,7 @@ const columns = [
 
   {
     title: "标签",
-    dataIndex: "tags",
+    slotName: "tags",
   },
   {
     title: "答案",
@@ -118,38 +179,5 @@ const columns = [
     slotName: "optional",
   },
 ];
-
-/**
- * 删除操作
- * @param question
- */
-const doDelete = async (question: Question) => {
-  //调用后端接口
-  const res = await QuestionControllerService.deleteQuestionUsingPost({
-    id: question.id,
-  });
-  if (res.code === 0) {
-    Message.success("删除成功");
-    //删除成功后，更新数据
-    loadData();
-  } else {
-    Message.error("删除失败");
-  }
-};
-
-//更新数据
-//将创建题目页面 复用 为更新题目页面
-//  只需要在原先路由后面带上id，就可以从后端读取数据，再把数据渲染到前端页面
-const router = useRouter();
-
-const doUpdate = (question: Question) => {
-  router.push({
-    path: "/update/question",
-    //用 query  ---URL后面的参数 ,不是params --动态路由的参数
-    query: {
-      id: question.id,
-    },
-  });
-};
 </script>
 <style></style>

@@ -39,45 +39,46 @@ export const routes: Array<RouteRecordRaw> = [
     path: "/manage/question",
     name: "管理题目",
     component: ManageQuestionView,
+    meta: {
+      access: ACCESS_ENUM.ADMIN, //仅管理员
+    },
   },
   {
     path: "/add/question",
     name: "创建题目",
     component: AddQuestionView,
-    // meta: {
-    //   access: ACCESS_ENUM.ADMIN,
-    // },+
+    meta: {
+      access: ACCESS_ENUM.USER, //仅登录用户
+    },
   },
   {
     path: "/update/question",
     name: "更新题目",
     component: AddQuestionView,
-  },
-  {
-    path: "/hide",
-    name: "隐藏题目",
-    component: ExempleViewVue,
     meta: {
       hideInMenu: true,
     },
   },
-  {
-    path: "/about",
-    name: "关于我的",
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
-  },
-  {
-    path: "/admin",
-    name: "管理员可见",
-    component: AdminView,
-    meta: {
-      access: ACCESS_ENUM.ADMIN,
-    },
-  },
+  // {
+  //   path: "/about",
+  //   name: "关于我的",
+  //   component: () =>
+  //     import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
+  // },
+  // {
+  //   path: "/admin",
+  //   name: "管理员可见",
+  //   component: AdminView,
+  //   meta: {
+  //     access: ACCESS_ENUM.ADMIN,
+  //   },
+  // },
   {
     path: "/noAuth",
     name: "无权限",
     component: NoAuthView,
+    meta: {
+      hideInMenu: true,
+    },
   },
 ];
