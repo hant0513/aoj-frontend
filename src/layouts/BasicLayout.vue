@@ -15,7 +15,7 @@
   box-shadow: #eee 1px 1px 5px;
 }
 #basicLayout .content {
-  background: linear-gradient(to right, #313c4e, #fff);
+  /* background: linear-gradient(to right, #313c4e, #fff); */
   margin-bottom: 16px;
   padding: 20px;
 }

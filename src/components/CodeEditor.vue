@@ -1,5 +1,9 @@
 <template>
-  <div id="code-editor" ref="codeEditorRef" style="min-height: 400px"></div>
+  <div
+    id="code-editor"
+    ref="codeEditorRef"
+    style="min-height: 480px; height: 90vh"
+  ></div>
 </template>
 <script lang="ts" setup>
 import * as monaco from "monaco-editor";
