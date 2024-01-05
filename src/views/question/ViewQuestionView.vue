@@ -40,12 +40,39 @@
           <a-tab-pane key="answer" title="题解"> 暂时无法查看 </a-tab-pane>
         </a-tabs>
       </a-col>
-      <a-col :md="12"> <CodeEditor /> </a-col>
+      <a-col :md="12">
+        <a-from :mode="form" layout="inline">
+          <a-from-item>
+            <a-select
+              v-model="form.language"
+              :style="{ width: '320px' }"
+              placeholder="选择语言"
+            >
+              <a-option>cpp</a-option>
+              <a-option>go</a-option>
+              <a-option>java</a-option>
+            </a-select>
+          </a-from-item>
+        </a-from>
+        <CodeEditor
+          :value="(form.code as string)"
+          :language="form.language"
+          :handle-change="changeCode"
+        />
+        <a-button type="primary" style="min-width: 200px" @click="doSubmit"
+          >提交代码</a-button
+        ></a-col
+      >
     </a-row>
   </div>
 </template>
 <script lang="ts" setup>
-import { QuestionVO, QuestionControllerService } from "../../../generated";
+import {
+  QuestionVO,
+  QuestionControllerService,
+  QuestionSubmitAddRequest,
+  QuestionSubmitControllerService,
+} from "../../../generated";
 import { ref, withDefaults, defineProps, onMounted } from "vue";
 import { Message } from "@arco-design/web-vue/";
 import CodeEditor from "@/components/CodeEditor.vue";
@@ -73,6 +100,33 @@ const loadData = async () => {
   } else {
     Message.error("加载失败" + res.message);
   }
+};
+
+const form = ref<QuestionSubmitAddRequest>({
+  language: "",
+  code: "",
+});
+
+/**
+ * 提交代码的函数
+ */
+const doSubmit = async () => {
+  if (!question.value?.id) {
+    return;
+  }
+  const res = await QuestionSubmitControllerService.doQuestionSubmitUsingPost({
+    ...form.value,
+    questionId: question.value.id,
+  });
+  if (res.code === 0) {
+    Message.success("提交成功");
+  } else {
+    Message.error("提交失败" + res.message);
+  }
+};
+
+const changeCode = (value: string) => {
+  form.value.code = value;
 };
 
 /**

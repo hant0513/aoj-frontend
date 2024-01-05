@@ -7,7 +7,7 @@
 </template>
 <script lang="ts" setup>
 import * as monaco from "monaco-editor";
-import { ref, onMounted, withDefaults, defineProps, toRaw } from "vue";
+import { ref, onMounted, withDefaults, defineProps, toRaw, watch } from "vue";
 
 const codeEditorRef = ref();
 const codeEditor = ref();
@@ -17,6 +17,7 @@ const codeEditor = ref();
  */
 interface Props {
   value: string;
+  language?: string; //接收外层传的语言，来更改对应的样式
   handleChange: (v: string) => void;
 }
 
@@ -25,10 +26,25 @@ interface Props {
  */
 const props = withDefaults(defineProps<Props>(), {
   value: () => "public class Main {}",
+  language: "java",
   handleChange: (v: string) => {
     console.log(v);
   },
 });
+/**
+ * 当语言更改时，渲染不同的样式
+ */
+watch(
+  () => props.language, //监听这个属性值
+  () => {
+    if (codeEditor.value) {
+      monaco.editor.setModelLanguage(
+        toRaw(codeEditor.value).getModel(),
+        props.language
+      );
+    }
+  }
+);
 
 onMounted(() => {
   if (!codeEditorRef.value) {
@@ -37,7 +53,7 @@ onMounted(() => {
   // Hover on each property to see its docs!
   codeEditor.value = monaco.editor.create(codeEditorRef.value, {
     value: props.value,
-    language: "java",
+    language: props.language,
     automaticLayout: true,
     minimap: {
       enabled: true,
