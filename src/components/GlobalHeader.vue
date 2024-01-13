@@ -22,7 +22,17 @@
       </a-menu>
     </a-col>
     <a-col flex="100px">
-      <div>{{ store.state.user?.loginUser.userName ?? "未登录" }}</div>
+      <div>
+        <button
+          v-if="store.state.user.loginUser.userRole === ACCESS_ENUM.NOT_LOGIN"
+          @click="doLogin"
+        >
+          登录
+        </button>
+        <div v-else-if="store.state.user.loginUser.userRole">
+          {{ store.state.user?.loginUser.userName }}
+        </div>
+      </div>
     </a-col>
   </a-row>
 </template>
@@ -55,12 +65,12 @@ const visibleRoutes = computed(() => {
 
 //获取当前存取的全部信息
 
-setTimeout(() => {
-  store.dispatch("user/getLoginUser", {
-    userName: "hant",
-    userRole: ACCESS_ENUM.ADMIN,
-  });
-}, 3000);
+// setTimeout(() => {
+//   store.dispatch("user/getLoginUser", {
+//     userName: "hant",
+//     userRole: ACCESS_ENUM.ADMIN,
+//   });
+// }, 3000);
 // 获取当前页面的路由对象。
 const router = useRouter();
 
@@ -76,6 +86,12 @@ const doMenuClick = (key: string) => {
   router.push({
     //进行路由导航
     path: key,
+  });
+};
+
+const doLogin = () => {
+  router.push({
+    path: "/user/login",
   });
 };
 </script>

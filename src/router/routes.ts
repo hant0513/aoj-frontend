@@ -82,13 +82,6 @@ export const routes: Array<RouteRecordRaw> = [
     },
   },
   // {
-  //   path: "/about",
-  //   name: "关于我的",
-  //   component: () =>
-  //     import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
-  // },import { QuestionsSubmitView } from '@/views/question/QuestionsViewSubmit.vue';
-
-  // {
   //   path: "/admin",
   //   name: "管理员可见",
   //   component: AdminView,
