@@ -46,7 +46,7 @@
             <a-select
               v-model="form.language"
               :style="{ width: '320px' }"
-              placeholder="选择语言"
+              placeholder="选择编程语言"
             >
               <a-option>cpp</a-option>
               <a-option>go</a-option>

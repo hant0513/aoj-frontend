@@ -22,6 +22,21 @@
           >
         </span>
       </template>
+      <template #acceptedRate="{ record }">
+        <a-space>
+          {{
+            `${
+              record.submitNum ? record.acceptedNum / record.submitNum : "0"
+            } % (${record.acceptedNum}/${record.submitNum})`
+          }}</a-space
+        >
+      </template>
+
+      <template #createTime="{ record }">
+        <a-space>
+          {{ moment(record.createTime).format("YYYY-MM-DD") }}
+        </a-space>
+      </template>
 
       <template #optional="{ record }">
         <a-space>
@@ -40,6 +55,7 @@ import { ref, onMounted, watchEffect } from "vue";
 import { QuestionControllerService, Question } from "../../../generated";
 import { Message } from "@arco-design/web-vue";
 import { useRouter } from "vue-router";
+import moment from "moment";
 
 // 默认dataList 数据为空
 const datalist = ref([]);
@@ -48,7 +64,7 @@ const total = ref(0);
 //默认查询条件
 const searchParams = ref({
   current: 1,
-  pageSize: 2,
+  pageSize: 5,
 });
 
 /**
@@ -152,17 +168,14 @@ const columns = [
     ellipsis: true,
   },
   {
-    title: "提交数",
-    dataIndex: "submitNum",
+    title: "通过率",
+    slotName: "acceptedRate",
   },
-  {
-    title: "通过数",
-    dataIndex: "acceptedNum",
-  },
-  {
-    title: "判题用例",
-    dataIndex: "judgeCase",
-  },
+
+  // {
+  //   title: "判题用例",
+  //   dataIndex: "judgeCase",
+  // },
   {
     title: "判题配置",
     dataIndex: "judgeConfig",
@@ -173,7 +186,7 @@ const columns = [
   },
   {
     title: "创建时间",
-    dataIndex: "createTime",
+    slotName: "createTime",
   },
   {
     title: "操作",

@@ -36,7 +36,7 @@ import checkAccess from "@/access/checkAccess";
 import ACCESS_ENUM from "../access/accessEnum";
 
 const store = useStore();
-const loginUser = store.state.user.loginUser; //获取当前用户
+//const loginUser = store.state.user.loginUser; //获取当前用户
 
 //展示在菜单上的路由,过滤出需要展示的路由
 const visibleRoutes = computed(() => {
@@ -67,7 +67,7 @@ const router = useRouter();
 //响应式变量
 const selectedKeys = ref("/"); //默认主页
 
-router.afterEach((to, from, failure) => {
+router.afterEach((to) => {
   selectedKeys.value = [to.path];
 });
 
@@ -81,8 +81,6 @@ const doMenuClick = (key: string) => {
 </script>
 
 <style scoped>
-.title-bar {
-}
 .logo {
   height: 48px;
 }

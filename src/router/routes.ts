@@ -1,7 +1,6 @@
 import NoAuthView from "@/views/NoAuth.vue";
 import ACCESS_ENUM from "@/access/accessEnum";
 import { RouteRecordRaw } from "vue-router";
-import ExempleViewVue from "@/views/ExempleView.vue";
 import UserLayoutVue from "@/layouts/UserLayout.vue";
 import UserLoginView from "@/views/user/UserLoginView.vue";
 import UserRegisterView from "@/views/user/UserRegisterView.vue";
@@ -9,6 +8,7 @@ import AddQuestionView from "@/views/question/AddQuestionView.vue";
 import ManageQuestionView from "@/views/question/ManageQuestionView.vue";
 import QuestionsView from "@/views/question/QuestionsView.vue";
 import ViewQuestionView from "@/views/question/ViewQuestionView.vue";
+import QuestionsSubmitView from "@/views/question/QuestionsSubmitView.vue";
 
 export const routes: Array<RouteRecordRaw> = [
   {
@@ -40,6 +40,11 @@ export const routes: Array<RouteRecordRaw> = [
     path: "/questions",
     name: "浏览题目",
     component: QuestionsView,
+  },
+  {
+    path: "/questions_submit",
+    name: "题目提交列表",
+    component: QuestionsSubmitView,
   },
   {
     path: "/view/question/:id",
@@ -81,7 +86,8 @@ export const routes: Array<RouteRecordRaw> = [
   //   name: "关于我的",
   //   component: () =>
   //     import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
-  // },
+  // },import { QuestionsSubmitView } from '@/views/question/QuestionsViewSubmit.vue';
+
   // {
   //   path: "/admin",
   //   name: "管理员可见",
